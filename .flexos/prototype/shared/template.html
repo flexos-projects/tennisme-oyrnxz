@@ -1,0 +1,121 @@
+<!--
+  [PROJECT_NAME] — [SCREEN_NAME] Prototype
+  Version: v[N]
+  Generated: [DATE]
+  Source spec: pages/[SPEC_FILE]
+  Shared assets: prototype/shared/
+-->
+<!DOCTYPE html>
+<html lang="en" data-theme="[light|dark]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#000000">
+  <title>[SCREEN_NAME] — [PROJECT_NAME]</title>
+
+  <!-- Fonts: link tags only, BEFORE stylesheets, NEVER @import -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="[GOOGLE_FONTS_URL]" rel="stylesheet">
+
+  <!-- Icons: Lucide via CDN -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <!-- CSS: Open Props → tokens → components (this order is mandatory) -->
+  <link rel="stylesheet" href="https://unpkg.com/open-props/open-props.min.css">
+  <link rel="stylesheet" href="../shared/tokens.css">
+  <link rel="stylesheet" href="../shared/components.css">
+
+  <!-- Mock data: one file, embeds data + helpers. NOT an ES module — uses window.MOCK_DB -->
+  <script src="../shared/mock-data.js"></script>
+  <!-- Access data via: const db = window.MOCK_DB; db.users, db.tasks, db.helpers.getById(), etc. -->
+
+  <!-- Page-specific styles ONLY — things that don't belong in components.css -->
+  <!-- Keep this minimal. If a pattern appears on 2+ screens, it belongs in components.css -->
+  <style>
+    /* === PAGE-SPECIFIC CSS === */
+    /* All values MUST use var(--token-name) — no hardcoded colors, sizes, or fonts */
+
+  </style>
+</head>
+<body>
+
+  <!-- Vue 3 app mount point -->
+  <div id="app">
+
+    <!-- === SCREEN CONTENT GOES HERE === -->
+
+  </div>
+
+  <!-- Toast container — always present -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Prototype label -->
+  <div class="prototype-label">[NUMBER] — [SCREEN_NAME]</div>
+
+  <!-- Vue 3 via CDN — MANDATORY -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons()
+
+    const { createApp, ref, computed, onMounted, watch, nextTick } = Vue
+    const db = window.MOCK_DB || {}
+    const currentUser = db.currentUser || {}
+
+    createApp({
+      setup() {
+        // === REACTIVE STATE ===
+
+
+        // === COMPUTED ===
+
+
+        // === METHODS ===
+        function showToast(message, type) {
+          type = type || 'info'
+          const c = document.getElementById('toast-container')
+          if (!c) return
+          const t = document.createElement('div')
+          t.className = 'toast toast-' + type
+          t.textContent = message
+          c.appendChild(t)
+          setTimeout(function() { t.remove() }, 4000)
+        }
+
+        // === LIFECYCLE ===
+        onMounted(function() {
+          // Re-init icons after Vue renders
+          nextTick(function() { lucide.createIcons() })
+        })
+
+        return {
+          // === EXPOSE TO TEMPLATE ===
+          db,
+          currentUser,
+          showToast,
+        }
+      }
+    }).mount('#app')
+  </script>
+
+  <!-- Context detection: clean paths on Vercel, relative paths on file:// -->
+  <script>
+    ;(function() {
+      if (window.location.protocol !== 'file:') return
+      var slugMap = {
+        // Generated from sitemap — update per screen
+        // 'dashboard': 'dashboard-v1.html',
+        // 'login': 'login-v1.html',
+      }
+      document.querySelectorAll('a[data-slug]').forEach(function(link) {
+        var slug = link.dataset.slug
+        if (slugMap[slug] && !link.getAttribute('aria-disabled')) {
+          link.href = slugMap[slug]
+        }
+      })
+    })()
+  </script>
+</body>
+</html>

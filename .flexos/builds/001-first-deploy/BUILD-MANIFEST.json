@@ -1,0 +1,14 @@
+{
+  "buildId": "001-first-deploy",
+  "status": "complete",
+  "tasks": [
+    {
+      "id": "001-prototype-to-nuxt",
+      "title": "Prototype to Nuxt",
+      "status": "complete",
+      "dependencies": []
+    }
+  ],
+  "createdAt": "2026-03-15T00:00:00.000Z",
+  "updatedAt": "2026-03-15T00:00:00.000Z"
+}
